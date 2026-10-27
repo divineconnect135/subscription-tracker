@@ -1,11 +1,15 @@
-import { CalendarDays, Repeat2 } from "lucide-react";
+import Link from "next/link";
+import { CalendarDays, Pencil, Repeat2 } from "lucide-react";
+
 import type {
-  DemoSubscription,
+  SubscriptionView,
   SubscriptionStatus,
-} from "@/features/subscriptions/mock-data";
+} from "@/features/subscriptions/types";
+import { SubscriptionStatusControl } from "./SubscriptionStatusControl";
+import { DeleteSubscriptionButton } from "./DeleteSubscriptionButton";
 
 type SubscriptionCardProps = {
-  subscription: DemoSubscription;
+  subscription: SubscriptionView;
 };
 
 const statusStyles: Record<SubscriptionStatus, string> = {
@@ -21,12 +25,10 @@ export function SubscriptionCard({ subscription }: SubscriptionCardProps) {
   }).format(subscription.amountCents / 100);
 
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+    <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold text-slate-900">
-            {subscription.name}
-          </h2>
+          <h2 className="text-lg font-bold">{subscription.name}</h2>
 
           <p className="mt-1 text-sm text-slate-500">{subscription.category}</p>
         </div>
@@ -41,23 +43,47 @@ export function SubscriptionCard({ subscription }: SubscriptionCardProps) {
       <div className="mt-6">
         <p className="text-2xl font-bold">{formattedPrice}</p>
 
-        <p className="mt-1 flex items-center gap-2 text-sm text-slate-500">
+        <p className="mt-2 flex items-center gap-2 text-sm text-slate-500">
           <Repeat2 className="size-4" aria-hidden="true" />
 
           {subscription.billingCycle === "MONTHLY"
             ? "Billed monthly"
             : "Billed yearly"}
         </p>
-      </div>
 
-      <div className="mt-6 border-t border-slate-100 pt-4">
-        <p className="flex items-center gap-2 text-sm text-slate-600">
+        <p className="mt-4 flex items-center gap-2 text-sm text-slate-600">
           <CalendarDays className="size-4" aria-hidden="true" />
-          Example renewal:
+          Renews:
           <time dateTime={subscription.nextRenewalDate}>
             {subscription.nextRenewalDate}
           </time>
         </p>
+
+        {subscription.notes && (
+          <p className="mt-4 text-sm leading-6 text-slate-500">
+            {subscription.notes}
+          </p>
+        )}
+      </div>
+
+      <div className="mt-auto space-y-4 pt-6">
+        <Link
+          href={`/subscriptions/${subscription.id}/edit`}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:underline"
+        >
+          <Pencil className="size-4" aria-hidden="true" />
+          Edit subscription
+        </Link>
+
+        <SubscriptionStatusControl
+          id={subscription.id}
+          status={subscription.status}
+        />
+
+        <DeleteSubscriptionButton
+          id={subscription.id}
+          name={subscription.name}
+        />
       </div>
     </article>
   );
