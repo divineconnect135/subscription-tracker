@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import {
   ArrowLeft,
   CreditCard,
@@ -55,6 +56,10 @@ export function Sidebar() {
 
       <div className="mt-auto border-t border-white/10 pt-5">
         <p className="px-3 text-xs text-slate-400">Interface preview</p>
+
+        <div className="rounded-lg bg-white mt-2">
+          <SignOutButton />
+        </div>
 
         <Link
           href="/"

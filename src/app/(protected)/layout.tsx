@@ -1,8 +1,24 @@
+import { Suspense } from "react";
 import type { ReactNode } from "react";
+
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { requireUser } from "@/lib/require-user";
 
-export default function AppLayout({ children }: { children: ReactNode }) {
+function SessionFallback() {
+  return (
+    <main
+      role="status"
+      className="flex min-h-screen items-center justify-center text-sm text-slate-600"
+    >
+      Checking your session...
+    </main>
+  );
+}
+
+async function ProtectedShell({ children }: { children: ReactNode }) {
+  await requireUser();
+
   return (
     <div className="min-h-screen lg:flex">
       <Sidebar />
@@ -18,5 +34,13 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function AppLayout({ children }: { children: ReactNode }) {
+  return (
+    <Suspense fallback={<SessionFallback />}>
+      <ProtectedShell>{children}</ProtectedShell>
+    </Suspense>
   );
 }

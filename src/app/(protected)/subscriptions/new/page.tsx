@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowLeft, Plus } from "lucide-react";
 import { buttonClasses } from "@/components/ui/Button";
+import { requireUser } from "@/lib/require-user";
 
-export default function NewSubscriptionPage() {
+export default async function NewSubscriptionPage() {
+  await requireUser();
   return (
     <div className="mx-auto max-w-2xl">
       <Link

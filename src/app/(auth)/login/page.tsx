@@ -1,5 +1,5 @@
-import { AuthPreview } from "@/components/ui/AuthPreview";
+import { AuthForm } from "@/components/auth/AuthForm";
 
 export default function LoginPage() {
-  return <AuthPreview mode="login" />;
+  return <AuthForm mode="login" />;
 }

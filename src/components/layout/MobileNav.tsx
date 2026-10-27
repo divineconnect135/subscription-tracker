@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import {
   CreditCard,
   LayoutDashboard,
@@ -79,6 +80,9 @@ export function MobileNav() {
           <Plus className="size-5" aria-hidden="true" />
           Add subscription
         </Link>
+        <div className="border-t border-slate-200 pt-3">
+          <SignOutButton />
+        </div>
       </nav>
     </div>
   );

@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
+
 import { buttonClasses } from "@/components/ui/Button";
 import { SubscriptionCard } from "@/components/subscriptions/SubscriptionCard";
-import { mockSubscriptions } from "@/features/subscriptions/mock-data";
+import { getOwnSubscriptions } from "@/features/subscriptions/queries";
 
-export default function SubscriptionsPage() {
+export default async function SubscriptionsPage() {
+  const subscriptions = await getOwnSubscriptions();
+
   return (
     <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-5">
@@ -15,13 +18,10 @@ export default function SubscriptionsPage() {
             Subscriptions
           </h1>
 
-          <p className="mt-2 text-slate-600">
-            View and organize your recurring expenses.
-          </p>
+          <p className="mt-2 text-slate-600">Your recurring expenses.</p>
 
           <p className="mt-3 text-sm text-slate-500">
-            Showing {mockSubscriptions.length} example subscriptions. These are
-            not saved records.
+            {subscriptions.length} subscriptions in your account.
           </p>
         </div>
 
@@ -31,21 +31,27 @@ export default function SubscriptionsPage() {
         </Link>
       </header>
 
-      <section aria-label="Example subscriptions">
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {mockSubscriptions.map((subscription) => (
-            <SubscriptionCard
-              key={subscription.id}
-              subscription={subscription}
-            />
-          ))}
-        </div>
-      </section>
+      {subscriptions.length === 0 ? (
+        <section className="rounded-2xl border border-slate-200 bg-white p-10 text-center">
+          <h2 className="text-xl font-bold">No subscriptions yet</h2>
 
-      <p className="text-sm text-slate-500">
-        Search, filtering, and sorting will be introduced in Phase 7. Editing
-        and deleting will be implemented in Phase 5.
-      </p>
+          <p className="mt-3 text-sm text-slate-600">
+            Your account is ready. Subscription creation will become available
+            in Phase 5.
+          </p>
+        </section>
+      ) : (
+        <section aria-label="Your subscriptions">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {subscriptions.map((subscription) => (
+              <SubscriptionCard
+                key={subscription.id}
+                subscription={subscription}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
