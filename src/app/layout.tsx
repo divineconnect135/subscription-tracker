@@ -3,8 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Subscription Tracker",
-  description:
-    "Manage recurring subscriptions and track monthly and yearly spending.",
+  description: "Manage recurring subscriptions and understand your spending.",
 };
 
 export default function RootLayout({
@@ -14,7 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="min-h-screen bg-canvas font-sans text-slate-900 antialiased">
+        {children}
+      </body>
     </html>
   );
 }
