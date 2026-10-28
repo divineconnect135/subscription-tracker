@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { Plus, SearchX } from "lucide-react";
+import { Plus } from "lucide-react";
 
 import { buttonClasses } from "@/components/ui/Button";
 import { PageSkeleton } from "@/components/ui/PageSkeleton";
