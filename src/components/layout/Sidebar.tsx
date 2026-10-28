@@ -29,7 +29,7 @@ const navigation = [
 export function Sidebar() {
   return (
     <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-slate-950 px-4 py-6 text-white lg:flex">
-      <Link href="/" className="mb-10 flex items-center gap-3 px-3">
+      <Link href="/dashboard" className="mb-10 flex items-center gap-3 px-3">
         <span className="flex size-10 items-center justify-center rounded-xl bg-brand-600">
           <Wallet className="size-5" aria-hidden="true" />
         </span>
@@ -62,7 +62,7 @@ export function Sidebar() {
         </div>
 
         <Link
-          href="/"
+          href="/dashboard"
           className="mt-3 flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:text-white"
         >
           <ArrowLeft className="size-4" aria-hidden="true" />
