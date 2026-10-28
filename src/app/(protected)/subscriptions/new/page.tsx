@@ -1,12 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { SubscriptionForm } from "@/components/subscriptions/SubscriptionForm";
-import { requireUser } from "@/lib/require-user";
 
-export default async function NewSubscriptionPage() {
-  await requireUser();
+export const metadata: Metadata = {
+  title: "Add subscription",
+};
 
+export default function NewSubscriptionPage() {
   return (
     <div className="mx-auto max-w-3xl">
       <Link
