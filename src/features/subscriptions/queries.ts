@@ -3,7 +3,10 @@ import "server-only";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/require-user";
 import { subscriptionIdSchema } from "./schema";
+import { buildSubscriptionQuery } from "./filters";
+
 import type { SubscriptionView } from "./types";
+import type { SubscriptionFilterValues } from "./filters";
 
 type SubscriptionRow = {
   id: string;
@@ -30,6 +33,7 @@ function toSubscriptionView(record: SubscriptionRow): SubscriptionView {
   };
 }
 
+// All subscriptions for the dashboard.
 export async function getOwnSubscriptions(): Promise<SubscriptionView[]> {
   const user = await requireUser();
 
@@ -37,14 +41,29 @@ export async function getOwnSubscriptions(): Promise<SubscriptionView[]> {
     where: {
       userId: user.id,
     },
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
   });
 
   return records.map(toSubscriptionView);
 }
 
+// Filtered subscriptions for the management page.
+export async function getFilteredSubscriptions(
+  filters: SubscriptionFilterValues,
+): Promise<SubscriptionView[]> {
+  const user = await requireUser();
+
+  const query = buildSubscriptionQuery(user.id, filters);
+
+  const records = await prisma.subscription.findMany({
+    where: query.where,
+    orderBy: query.orderBy,
+  });
+
+  return records.map(toSubscriptionView);
+}
+
+// A single subscription for the edit page.
 export async function getOwnSubscription(
   id: string,
 ): Promise<SubscriptionView | null> {
