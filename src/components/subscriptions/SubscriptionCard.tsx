@@ -25,10 +25,12 @@ export function SubscriptionCard({ subscription }: SubscriptionCardProps) {
   }).format(subscription.amountCents / 100);
 
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <article className="flex h-full min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold">{subscription.name}</h2>
+          <h2 className="wrap-break-word text-lg font-bold">
+            {subscription.name}
+          </h2>
 
           <p className="mt-1 text-sm text-slate-500">{subscription.category}</p>
         </div>

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { CalendarDays, CreditCard, TrendingUp, Wallet } from "lucide-react";
+import { PageSkeleton } from "@/components/ui/PageSkeleton";
 
 import { requireUser } from "@/lib/require-user";
 import { getUtcToday } from "@/lib/dates";
@@ -17,6 +18,10 @@ import { SummaryCard } from "@/components/dashboard/SummaryCard";
 import { SpendingOverview } from "@/components/dashboard/SpendingOverview";
 import { UpcomingRenewals } from "@/components/dashboard/UpcomingRenewals";
 import { RecentSubscriptions } from "@/components/dashboard/RecentSubscriptions";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 async function DashboardContent() {
   const user = await requireUser();
@@ -105,16 +110,7 @@ async function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <Suspense
-      fallback={
-        <div
-          role="status"
-          className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600"
-        >
-          Loading your spending summary...
-        </div>
-      }
-    >
+    <Suspense fallback={<PageSkeleton variant="dashboard" />}>
       <DashboardContent />
     </Suspense>
   );

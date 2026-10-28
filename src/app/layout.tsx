@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Subscription Tracker",
-  description: "Manage recurring subscriptions and understand your spending.",
+  title: {
+    default: "Subscription Tracker",
+    template: "%s | Subscription Tracker",
+  },
+  description:
+    "Track recurring subscriptions, manage renewal dates, and understand spending in Canadian dollars.",
 };
 
 export default function RootLayout({

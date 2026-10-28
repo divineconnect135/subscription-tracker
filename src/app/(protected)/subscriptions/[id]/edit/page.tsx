@@ -11,6 +11,7 @@ import {
   parseSubscriptionFilters,
   type RawSearchParams,
 } from "@/features/subscriptions/filters";
+import { Metadata } from "next";
 
 type SubscriptionsPageProps = {
   searchParams: Promise<RawSearchParams>;
@@ -20,6 +21,10 @@ const noticeMessages: Record<string, string> = {
   created: "Subscription created successfully.",
   updated: "Subscription updated successfully.",
   deleted: "Subscription deleted successfully.",
+};
+
+export const metadata: Metadata = {
+  title: "Edit subscription",
 };
 
 async function SubscriptionResults({ searchParams }: SubscriptionsPageProps) {
